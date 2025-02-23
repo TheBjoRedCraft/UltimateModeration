@@ -10,3 +10,5 @@ mysql:
   host: localhost  # Database host / Datenbank-Host
   port: 3306       # Database port / Datenbank-Port
   database: ultimate_moderation  # Database name / Datenbankname
+  username: root  # Database username / Datenbank-Benutzername
+  password: root  # Database password / Datenbank-Passwort
