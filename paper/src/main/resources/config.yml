@@ -1,0 +1,12 @@
+# Storage method configuration
+# Konfiguration der Speichermethode
+# Possible values: local (sqlite), database (mysql)
+# Mögliche Werte: local (sqlite), database (mysql)
+storage-method: local
+
+# MySQL database configuration
+# MySQL-Datenbankkonfiguration
+mysql:
+  host: localhost  # Database host / Datenbank-Host
+  port: 3306       # Database port / Datenbank-Port
+  database: ultimate_moderation  # Database name / Datenbankname
