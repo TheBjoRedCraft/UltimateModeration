@@ -20,6 +20,11 @@ class PageableMessageBuilder {
         return this
     }
 
+    fun addLine(line: MessageBuilder): PageableMessageBuilder {
+        lines.add(line.build())
+        return this
+    }
+
     fun setPageCommand(command: String): PageableMessageBuilder {
         this.pageCommand = command
         return this
