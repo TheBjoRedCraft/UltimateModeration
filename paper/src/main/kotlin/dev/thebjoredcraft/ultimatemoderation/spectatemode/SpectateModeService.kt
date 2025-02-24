@@ -1,4 +1,4 @@
-package dev.thebjoredcraft.ultimatemoderation.service
+package dev.thebjoredcraft.ultimatemoderation.spectatemode
 
 import dev.thebjoredcraft.ultimatemoderation.util.Colors
 import dev.thebjoredcraft.ultimatemoderation.util.MessageBuilder
@@ -47,6 +47,14 @@ object SpectateModeService {
         return players.contains(player)
     }
 
+    fun toggle(player: Player) {
+        if (isSpectating(player)) {
+            this.stopSpectateMode(player)
+        } else {
+            this.startSpectateMode(player)
+        }
+    }
+
     fun back(player: Player) {
         val history = previousPlayers[player]
 
@@ -70,5 +78,9 @@ object SpectateModeService {
         } else {
             player.sendActionBar(MessageBuilder().error("Es gibt keine weiteren Spieler zum Zuschauen.").build().decorate(TextDecoration.BOLD))
         }
+    }
+
+    fun getSpectatingPlayers(): ObjectSet<Player> {
+        return players
     }
 }
