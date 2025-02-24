@@ -1,6 +1,6 @@
 package dev.thebjoredcraft.ultimatemoderation.listener
 
-import dev.thebjoredcraft.ultimatemoderation.service.SpectateModeService
+import dev.thebjoredcraft.ultimatemoderation.spectatemode.SpectateModeService
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerSwapHandItemsEvent
