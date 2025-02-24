@@ -12,7 +12,7 @@ class SpectateModeListCommand(commandName: String): CommandAPICommand(commandNam
         withPermission("ultimatemoderation.command.spectatemode")
         withArguments(IntegerArgument("page"))
         executesPlayer(PlayerCommandExecutor() { player, args ->
-            val message: PageableMessageBuilder = PageableMessageBuilder()
+            val message = PageableMessageBuilder()
             val page = args.getOrDefaultUnchecked("page", 1)
 
             if(SpectateModeService.getSpectatingPlayers().isEmpty()) {
