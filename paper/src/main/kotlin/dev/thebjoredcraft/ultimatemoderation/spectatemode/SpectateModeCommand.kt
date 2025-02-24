@@ -6,6 +6,7 @@ import dev.jorel.commandapi.executors.PlayerCommandExecutor
 class SpectateModeCommand(commandName: String): CommandAPICommand(commandName) {
     init {
         withPermission("ultimatemoderation.command.spectatemode")
+        withSubcommands(SpectateModeListCommand("list"))
         executesPlayer(PlayerCommandExecutor() { player, args ->
             SpectateModeService.toggle(player)
         })
