@@ -2,6 +2,7 @@ package dev.thebjoredcraft.ultimatemoderation
 
 import com.github.shynixn.mccoroutine.bukkit.SuspendingJavaPlugin
 import dev.thebjoredcraft.ultimatemoderation.spectatemode.SpectateModeCommand
+import dev.thebjoredcraft.ultimatemoderation.spectatemode.SpectateModeService
 import dev.thebjoredcraft.ultimatemoderation.util.Colors
 import dev.thebjoredcraft.ultimatemoderation.util.MessageBuilder
 
@@ -16,7 +17,7 @@ class UltimateModerationPaper(): SuspendingJavaPlugin() {
     }
 
     override suspend fun onEnableAsync() {
-
+        SpectateModeService.startTask()
     }
 
     companion object {
