@@ -1,5 +1,6 @@
 package dev.thebjoredcraft.ultimatemoderation.spectatemode
 
+import dev.thebjoredcraft.ultimatemoderation.plugin
 import dev.thebjoredcraft.ultimatemoderation.util.Colors
 import dev.thebjoredcraft.ultimatemoderation.util.MessageBuilder
 import it.unimi.dsi.fastutil.objects.ObjectArraySet
@@ -25,22 +26,24 @@ object SpectateModeService {
         }
     }
 
-    fun startSpectateMode(player: Player) {
+    private fun startSpectateMode(player: Player) {
         players.add(player)
         previousPlayers[player] = ArrayDeque()
 
         player.allowFlight = true
         player.isFlying = true
+        this.updateHiding()
     }
 
-    fun stopSpectateMode(player: Player) {
+    private fun stopSpectateMode(player: Player) {
         players.remove(player)
         previousPlayers.remove(player)
 
-        if(player.gameMode != GameMode.CREATIVE || player.gameMode != GameMode.SPECTATOR) {
+        if (player.gameMode != GameMode.CREATIVE && player.gameMode != GameMode.SPECTATOR) {
             player.isFlying = false
             player.allowFlight = false
         }
+        this.updateHiding()
     }
 
     fun isSpectating(player: Player): Boolean {
@@ -49,9 +52,9 @@ object SpectateModeService {
 
     fun toggle(player: Player) {
         if (isSpectating(player)) {
-            this.stopSpectateMode(player)
+            stopSpectateMode(player)
         } else {
-            this.startSpectateMode(player)
+            startSpectateMode(player)
         }
     }
 
@@ -60,7 +63,6 @@ object SpectateModeService {
 
         if (!history.isNullOrEmpty()) {
             val previousPlayer = history.removeLast()
-
             player.teleport(previousPlayer)
         } else {
             player.sendActionBar(MessageBuilder().error("Es gibt keine weiteren Spieler zum Zuschauen.").build().decorate(TextDecoration.BOLD))
@@ -73,7 +75,6 @@ object SpectateModeService {
         if (onlinePlayers.isNotEmpty()) {
             val nextPlayer = onlinePlayers[Random.nextInt(onlinePlayers.size)]
             previousPlayers[player]?.addLast(nextPlayer)
-
             player.teleport(nextPlayer)
         } else {
             player.sendActionBar(MessageBuilder().error("Es gibt keine weiteren Spieler zum Zuschauen.").build().decorate(TextDecoration.BOLD))
@@ -82,5 +83,17 @@ object SpectateModeService {
 
     fun getSpectatingPlayers(): ObjectSet<Player> {
         return players
+    }
+
+    private fun updateHiding() {
+        for (player in Bukkit.getOnlinePlayers()) {
+            for (spectator in players) {
+                if (player.hasPermission("spectate.bypass") || players.contains(player)) {
+                    player.showPlayer(plugin, spectator)
+                } else {
+                    player.hidePlayer(plugin, spectator)
+                }
+            }
+        }
     }
 }
