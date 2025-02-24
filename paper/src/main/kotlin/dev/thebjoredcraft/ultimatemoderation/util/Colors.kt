@@ -18,7 +18,7 @@ object Colors {
     val PREFIX_COLOR: TextColor = PRIMARY
 
     val PREFIX: Component = Component.text(">> ", DARK_SPACER)
-        .append(Component.text("SF", PREFIX_COLOR))
+        .append(Component.text("UM", PREFIX_COLOR))
         .append(Component.text(" | ", DARK_SPACER))
 
     val BLACK: NamedTextColor = NamedTextColor.BLACK
