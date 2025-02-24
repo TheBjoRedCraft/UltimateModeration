@@ -13,9 +13,9 @@ class SpectateModeCommand(commandName: String): CommandAPICommand(commandName) {
             SpectateModeService.toggle(player)
 
             if(SpectateModeService.isSpectating(player)) {
-                UltimateModerationPaper.send(MessageBuilder().primary("Du bist nun im ").success("Spectate-Modus"), player)
+                UltimateModerationPaper.send(MessageBuilder().primary("Du bist nun im ").success("Spectate-Modus").primary("."), player)
             } else {
-                UltimateModerationPaper.send(MessageBuilder().primary("Du bist nun nicht mehr im ").error("Spectate-Modus"), player)
+                UltimateModerationPaper.send(MessageBuilder().primary("Du bist nun nicht mehr im ").error("Spectate-Modus").primary("."), player)
             }
         })
     }

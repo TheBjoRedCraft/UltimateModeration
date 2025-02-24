@@ -5,7 +5,7 @@ import dev.thebjoredcraft.ultimatemoderation.util.Colors
 import dev.thebjoredcraft.ultimatemoderation.util.MessageBuilder
 import it.unimi.dsi.fastutil.objects.ObjectArraySet
 import it.unimi.dsi.fastutil.objects.ObjectSet
-import kotlinx.coroutines.delay
+import net.kyori.adventure.text.format.TextColor
 import net.kyori.adventure.text.format.TextDecoration
 import org.bukkit.Bukkit
 import org.bukkit.GameMode
@@ -16,14 +16,12 @@ object SpectateModeService {
     private val players: ObjectSet<Player> = ObjectArraySet()
     private val previousPlayers: MutableMap<Player, ArrayDeque<Player>> = mutableMapOf()
 
-    suspend fun startTask() {
-        while (players.isNotEmpty()) {
-            delay(2500)
-
+    fun startTask() {
+        Bukkit.getScheduler().runTaskTimerAsynchronously(plugin, Runnable {
             for (player in players) {
-                player.sendActionBar(MessageBuilder().primary("ᴅʀüᴄᴋᴇ ").miniMessage(Colors.INFO.asHexString() + "<key:key.sneak> + <key:key.swapOffhand").primary(" ᴜᴍ ᴢᴜʀüᴄᴋᴢᴜɢᴇʜᴇɴ, ᴅʀüᴄᴋᴇ ").miniMessage(Colors.INFO.asHexString() + "<key:key.swapOffhand").primary(" ᴜᴍ ᴡᴇɪᴛᴇʀᴢᴜɢᴇʜᴇɴ").build().decorate(TextDecoration.BOLD))
+                player.sendActionBar(MessageBuilder().primary("ᴅʀüᴄᴋᴇ ").miniMessage(Colors.INFO.asMMString() + "<key:key.sneak> + <key:key.swapOffhand>").primary(" ᴜᴍ ᴢᴜʀüᴄᴋᴢᴜɢᴇʜᴇɴ, ᴅʀüᴄᴋᴇ ").miniMessage(Colors.INFO.asMMString() + "<key:key.swapOffhand>").primary(" ᴜᴍ ᴡᴇɪᴛᴇʀᴢᴜɢᴇʜᴇɴ").build().decorate(TextDecoration.BOLD))
             }
-        }
+        }, 0, 40)
     }
 
     private fun startSpectateMode(player: Player) {
@@ -32,6 +30,7 @@ object SpectateModeService {
 
         player.allowFlight = true
         player.isFlying = true
+
         this.updateHiding()
     }
 
@@ -61,7 +60,8 @@ object SpectateModeService {
     fun back(player: Player) {
         val history = previousPlayers[player]
 
-        if (!history.isNullOrEmpty()) {
+        if (history != null && history.size > 1) {
+            history.removeLast()
             val previousPlayer = history.removeLast()
             player.teleport(previousPlayer)
         } else {
@@ -95,5 +95,9 @@ object SpectateModeService {
                 }
             }
         }
+    }
+
+    private fun TextColor.asMMString(): String {
+        return "<" + this.asHexString() + ">"
     }
 }

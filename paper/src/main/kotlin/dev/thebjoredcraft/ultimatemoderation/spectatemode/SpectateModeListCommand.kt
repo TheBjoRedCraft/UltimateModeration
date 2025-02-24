@@ -10,7 +10,7 @@ import dev.thebjoredcraft.ultimatemoderation.util.PageableMessageBuilder
 class SpectateModeListCommand(commandName: String): CommandAPICommand(commandName) {
     init {
         withPermission("ultimatemoderation.command.spectatemode")
-        withArguments(IntegerArgument("page"))
+        withOptionalArguments(IntegerArgument("page"))
         executesPlayer(PlayerCommandExecutor() { player, args ->
             val message = PageableMessageBuilder()
             val page = args.getOrDefaultUnchecked("page", 1)
