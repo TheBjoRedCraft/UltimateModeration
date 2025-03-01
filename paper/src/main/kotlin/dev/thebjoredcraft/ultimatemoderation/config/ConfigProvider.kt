@@ -5,7 +5,7 @@ import dev.thebjoredcraft.ultimatemoderation.plugin
 object ConfigProvider {
     private val config = plugin.config
 
-    var storageMethod: String = "sqlite"
+    var storageMethod: String = "local"
 
     var mysqlHost: String = "localhost"
     var mysqlPort: Int = 3306
@@ -14,7 +14,7 @@ object ConfigProvider {
     var mysqlPassword: String = "password"
 
     fun load() {
-        storageMethod = config.getString("storage-method") ?: "sqlite"
+        storageMethod = config.getString("storage-method") ?: "local"
 
         mysqlHost = config.getString("mysql.host") ?: "localhost"
         mysqlPort = config.getInt("mysql.port") ?: 3306
@@ -22,6 +22,4 @@ object ConfigProvider {
         mysqlUsername = config.getString("mysql.username") ?: "root"
         mysqlPassword = config.getString("mysql.password") ?: "password"
     }
-
-
 }

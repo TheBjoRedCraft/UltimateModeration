@@ -8,6 +8,11 @@ import net.kyori.adventure.text.minimessage.MiniMessage
 class MessageBuilder {
     private var message: Component = Component.empty()
 
+    fun withPrefix(): MessageBuilder {
+        message = message.append(Colors.PREFIX)
+        return this
+    }
+
     fun primary(text: String): MessageBuilder {
         message = message.append(Component.text(text, Colors.PRIMARY))
         return this

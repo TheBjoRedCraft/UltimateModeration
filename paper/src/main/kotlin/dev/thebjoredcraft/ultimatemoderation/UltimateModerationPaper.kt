@@ -32,5 +32,10 @@ class UltimateModerationPaper(): SuspendingJavaPlugin() {
         fun send(messageBuilder: MessageBuilder, vararg players: Player) {
             players.forEach { player -> player.sendMessage(Colors.PREFIX.append(messageBuilder.build())) }
         }
+
+        fun disable(reason: String) {
+            Bukkit.getConsoleSender().sendMessage(MessageBuilder().withPrefix().error(reason).build())
+            Bukkit.getPluginManager().disablePlugin(plugin)
+        }
     }
 }
