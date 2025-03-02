@@ -10,7 +10,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.util.UUID
 
-class DatabaseProvider {
+object DatabaseProvider {
     private lateinit var dataSource: HikariDataSource
 
     fun connect() {
@@ -98,14 +98,14 @@ class DatabaseProvider {
     }
 
     suspend fun loadPlayer(uuid: UUID): UMPlayer {
-        withContext(Dispatchers.IO) {
+        return withContext(Dispatchers.IO) {
             dataSource.connection.use { connection ->
                 connection.prepareStatement("SELECT * FROM users WHERE uuid = ?").use { statement ->
                     statement.setString(1, uuid.toString())
 
                     statement.executeQuery().use { resultSet ->
                         if (!resultSet.next()) {
-                            return@withContext null
+                            return@withContext createFakePlayer()
                         }
 
                         return@withContext UMPlayer(
@@ -126,19 +126,17 @@ class DatabaseProvider {
                 }
             }
         }
-
-        return this.createFakePlayer()
     }
 
     suspend fun loadPlayerFromName(name: String): UMPlayer {
-        withContext(Dispatchers.IO) {
+        return withContext(Dispatchers.IO) {
             dataSource.connection.use { connection ->
                 connection.prepareStatement("SELECT * FROM users WHERE name = ?").use { statement ->
                     statement.setString(1, name)
 
                     statement.executeQuery().use { resultSet ->
                         if (!resultSet.next()) {
-                            return@withContext null
+                            return@withContext createFakePlayer()
                         }
 
                         return@withContext UMPlayer(
@@ -159,11 +157,9 @@ class DatabaseProvider {
                 }
             }
         }
-
-        return this.createFakePlayer()
     }
 
-    private fun createFakePlayer(): UMPlayer {
+    fun createFakePlayer(): UMPlayer {
         return UMPlayer(UUID.randomUUID(), real = false)
     }
 
