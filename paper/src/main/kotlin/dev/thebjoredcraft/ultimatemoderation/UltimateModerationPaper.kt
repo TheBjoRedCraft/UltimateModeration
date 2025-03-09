@@ -14,6 +14,7 @@ import dev.thebjoredcraft.ultimatemoderation.staffchat.StaffChatCommand
 import dev.thebjoredcraft.ultimatemoderation.staffchat.StaffChatListener
 import dev.thebjoredcraft.ultimatemoderation.util.Colors
 import dev.thebjoredcraft.ultimatemoderation.util.MessageBuilder
+import dev.thebjoredcraft.ultimatemoderation.vanish.VanishCommand
 
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
@@ -27,6 +28,7 @@ class UltimateModerationPaper(): SuspendingJavaPlugin() {
         FreezeCommand("freeze").register()
         StaffChatCommand("staffchat").register()
         AuthCommand("auth").register()
+        VanishCommand("vanish").register()
 
         Bukkit.getPluginManager().registerEvents(SwapOffhandListener(), this)
         Bukkit.getPluginManager().registerEvents(DamageListener(), this)

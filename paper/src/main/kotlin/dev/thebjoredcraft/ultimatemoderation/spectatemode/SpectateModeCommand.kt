@@ -3,6 +3,7 @@ package dev.thebjoredcraft.ultimatemoderation.spectatemode
 import dev.jorel.commandapi.CommandAPICommand
 import dev.jorel.commandapi.executors.PlayerCommandExecutor
 import dev.thebjoredcraft.ultimatemoderation.UltimateModerationPaper
+import dev.thebjoredcraft.ultimatemoderation.auth.AuthController
 import dev.thebjoredcraft.ultimatemoderation.util.MessageBuilder
 
 class SpectateModeCommand(commandName: String): CommandAPICommand(commandName) {
@@ -10,6 +11,11 @@ class SpectateModeCommand(commandName: String): CommandAPICommand(commandName) {
         withPermission("ultimatemoderation.command.spectatemode")
         withSubcommands(SpectateModeListCommand("list"))
         executesPlayer(PlayerCommandExecutor() { player, args ->
+            if(!AuthController.isLoggedIn(player)) {
+                UltimateModerationPaper.send(MessageBuilder().error("Du musst eingeloggt sein, um diesen Befehl zu nutzen."), player)
+                return@PlayerCommandExecutor
+            }
+
             SpectateModeService.toggle(player)
 
             if(SpectateModeService.isSpectating(player)) {

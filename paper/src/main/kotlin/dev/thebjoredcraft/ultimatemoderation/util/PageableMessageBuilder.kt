@@ -7,21 +7,21 @@ import net.kyori.adventure.text.event.ClickEvent
 import net.kyori.adventure.text.format.NamedTextColor
 import net.kyori.adventure.text.format.TextDecoration
 import org.bukkit.command.CommandSender
-
 import kotlin.math.ceil
 import kotlin.math.min
 
 class PageableMessageBuilder {
     private val lines: ObjectList<Component> = ObjectArrayList()
     private var pageCommand = "An error occurred while trying to display the page."
+    private var title: Component = Component.empty()
 
     fun addLine(line: Component): PageableMessageBuilder {
         lines.add(line)
         return this
     }
 
-    fun addLine(line: MessageBuilder): PageableMessageBuilder {
-        lines.add(line.build())
+    fun setTitle(title: Component): PageableMessageBuilder {
+        this.title = title
         return this
     }
 
@@ -41,7 +41,7 @@ class PageableMessageBuilder {
             return
         }
 
-        var message: Component = Component.text("==== Seite $page von $totalPages ====", Colors.VARIABLE_KEY).decorate(TextDecoration.BOLD).append(Component.newline())
+        var message: Component = title.append(MessageBuilder().darkSpacer(" (Seite $page von $totalPages)").build().decorate(TextDecoration.ITALIC)).append(Component.newline())
         val navigation = this.getComponent(page, totalPages)
 
         for (i in start..<end) {
