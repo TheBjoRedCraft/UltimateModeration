@@ -7,6 +7,7 @@ class AuthCommand(commandName: String): CommandAPICommand(commandName) {
         withPermission("ultimatemoderation.command.auth")
         withSubcommand(AuthLoginCommand("login"))
         withSubcommand(AuthLogoutCommand("logout"))
+        withSubcommand(AuthListCommand("list"))
 
         withSubcommand(AuthCreateCommand("create"))
         withSubcommand(AuthDeleteCommand("delete"))

@@ -21,7 +21,7 @@ class AuthLoginCommand(commandName: String): CommandAPICommand(commandName) {
             if(success) {
                 UltimateModerationPaper.send(MessageBuilder().primary("Du bist nun ").success("eingeloggt."), player)
             } else {
-                UltimateModerationPaper.send(MessageBuilder().error("Ein Fehler ist aufgetreten."), player)
+                UltimateModerationPaper.send(MessageBuilder().error("Ein Account mit diesem Name existiert nicht."), player)
             }
         })
     }
