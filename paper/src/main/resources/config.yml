@@ -12,3 +12,6 @@ mysql:
   database: ultimate_moderation  # Database name / Datenbankname
   username: root  # Database username / Datenbank-Benutzername
   password: root  # Database password / Datenbank-Passwort
+
+discord:
+  staff-chat-url: "https://discord.com/api/webhooks/1234567890/abcdefg" # URL for the staff chat webhook, leave empty to disable / URL für den Webhook des Team-Chats, leer lassen um zu deaktivieren
