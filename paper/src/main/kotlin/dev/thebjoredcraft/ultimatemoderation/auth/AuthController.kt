@@ -35,7 +35,7 @@ object AuthController {
             return false
         }
 
-        accounts.add(AuthAccount(username, password))
+        accounts.add(AuthAccount(username, password, false))
         return true
     }
 
