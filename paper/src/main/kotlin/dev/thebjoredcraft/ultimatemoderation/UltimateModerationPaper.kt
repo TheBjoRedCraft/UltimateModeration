@@ -1,6 +1,7 @@
 package dev.thebjoredcraft.ultimatemoderation
 
 import com.github.shynixn.mccoroutine.bukkit.SuspendingJavaPlugin
+import dev.thebjoredcraft.ultimatemoderation.auth.AuthListener
 import dev.thebjoredcraft.ultimatemoderation.auth.command.AuthCommand
 import dev.thebjoredcraft.ultimatemoderation.database.DatabaseProvider
 import dev.thebjoredcraft.ultimatemoderation.freeze.FreezeCommand
@@ -31,6 +32,7 @@ class UltimateModerationPaper(): SuspendingJavaPlugin() {
         Bukkit.getPluginManager().registerEvents(DamageListener(), this)
         Bukkit.getPluginManager().registerEvents(MoveListener(), this)
         Bukkit.getPluginManager().registerEvents(StaffChatListener(), this)
+        Bukkit.getPluginManager().registerEvents(AuthListener(), this)
 
         SpectateModeService.startTask()
     }
