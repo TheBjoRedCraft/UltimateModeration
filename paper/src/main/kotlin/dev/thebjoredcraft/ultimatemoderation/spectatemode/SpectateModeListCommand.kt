@@ -25,7 +25,7 @@ class SpectateModeListCommand(commandName: String): CommandAPICommand(commandNam
             var index = 1
 
             for (spectatingPlayer in SpectateModeService.getSpectatingPlayers()) {
-                message.addLine(MessageBuilder().variableValue("$index. ").primary(spectatingPlayer.name))
+                message.addLine(MessageBuilder().variableValue("$index. ").primary(spectatingPlayer.name).build())
 
                 index++;
             }

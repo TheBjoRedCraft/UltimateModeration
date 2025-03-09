@@ -1,10 +1,12 @@
 package dev.thebjoredcraft.ultimatemoderation.auth
 
+import it.unimi.dsi.fastutil.objects.Object2ObjectMap
+import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap
 import it.unimi.dsi.fastutil.objects.ObjectArraySet
 import org.bukkit.entity.Player
 
 object AuthController {
-    private val players = ObjectArraySet<Player>()
+    private val players = Object2ObjectOpenHashMap<Player, AuthAccount>()
     val accounts = ObjectArraySet<AuthAccount>()
 
     fun authenticate(player: Player, username: String, password: String): Boolean {
@@ -18,16 +20,22 @@ object AuthController {
             return false
         }
 
-        this.login(player)
+        if(account.blocked) {
+            return false
+        }
+
+        this.login(player, account)
         return true
     }
 
-    private fun login(player: Player) {
-        players.add(player)
+    private fun login(player: Player, account: AuthAccount) {
+        players[player] = account
     }
 
     fun logout(player: Player): Boolean {
-        return players.remove(player)
+        val account = players[player] ?: return false
+
+        return players.remove(player, account)
     }
 
     fun createAccount(username: String, password: String): Boolean {
@@ -93,5 +101,9 @@ object AuthController {
 
     fun isLoggedIn(player: Player): Boolean {
         return players.contains(player)
+    }
+
+    fun isLoggedIn(user: String): Boolean {
+        return players.any { it.value.username == user }
     }
 }

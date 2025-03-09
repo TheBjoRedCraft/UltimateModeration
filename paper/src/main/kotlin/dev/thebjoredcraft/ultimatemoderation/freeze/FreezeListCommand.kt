@@ -24,7 +24,7 @@ class FreezeListCommand(commandName: String): CommandAPICommand(commandName) {
             var index = 1
 
             for (frozenPlayer in FreezeService.getFrozenPlayers()) {
-                message.addLine(MessageBuilder().variableValue("$index. ").primary(frozenPlayer.name).command(MessageBuilder().darkSpacer(" (Klicke, zum teleportieren)"), MessageBuilder().darkSpacer(" (Klicke, zum teleportieren)"), "/tp " + frozenPlayer.name))
+                message.addLine(MessageBuilder().variableValue("$index. ").primary(frozenPlayer.name).command(MessageBuilder().darkSpacer(" (Klicke, zum teleportieren)"), MessageBuilder().darkSpacer(" (Klicke, zum teleportieren)"), "/tp " + frozenPlayer.name).build())
                 index++;
             }
 

@@ -35,7 +35,7 @@ object StaffChatController {
             UltimateModerationPaper.send(MessageBuilder().primary(player.name).darkSpacer("@Staff: ").component(message.color(Colors.INFO)), staff)
         }
 
-        DiscordWebsocketService.sendMessage(DiscordWebsocketService.STAFF_CHAT_URL, EmbedBuilder("Team Chat", "", 12856130, "Hier kommt die Zeit", "Staff Chat", ObjectArrayList.of(
+        DiscordWebsocketService.sendMessage(DiscordWebsocketService.STAFF_CHAT_URL, EmbedBuilder("Team Chat", "", 12856130, "Hier kommt die Zeit", player.name, ObjectArrayList.of(
             EmbedField("message", PlainTextComponentSerializer.plainText().serialize(message), false)
         )))
     }

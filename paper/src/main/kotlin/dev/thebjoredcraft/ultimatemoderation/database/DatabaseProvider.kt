@@ -13,8 +13,8 @@ import org.bukkit.GameMode
 import org.bukkit.Location
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
-
-import java.util.UUID
+import java.io.File
+import java.util.*
 import kotlin.io.path.*
 
 object DatabaseProvider {
@@ -111,14 +111,17 @@ object DatabaseProvider {
         when (method.lowercase()) {
             "local" -> {
                 Class.forName("org.sqlite.JDBC")
-                val dbFile = plugin.dataPath / "storage.db"
+                val dbfile = File("${plugin.dataPath}/storage.db")
 
-                if (dbFile.notExists()) {
-                    dbFile.createDirectories()
-                    dbFile.createFile()
+                if (!dbfile.exists()) {
+                    dbfile.parentFile.mkdirs()
+
+                    withContext(Dispatchers.IO) {
+                        dbfile.createNewFile()
+                    }
                 }
 
-                Database.connect("jdbc:sqlite:file:${dbFile.absolutePathString()}", "org.sqlite.JDBC")
+                Database.connect("jdbc:sqlite:file:${dbfile.absolutePath}", "org.sqlite.JDBC")
                 logger.info(MessageBuilder().withPrefix().success("Successfully connected to database with sqlite!").build())
             }
 
@@ -139,17 +142,18 @@ object DatabaseProvider {
             }
 
             else -> {
-                logger.warn(MessageBuilder().withPrefix().info("Unknown storage method \"$method\". Using local storage...").build())
-
                 Class.forName("org.sqlite.JDBC")
-                val dbFile = plugin.dataPath / "storage.db"
+                val dbfile = File("${plugin.dataPath}/storage.db")
 
-                if (!dbFile.exists()) {
-                    dbFile.createDirectories()
-                    dbFile.createFile()
+                if (!dbfile.exists()) {
+                    dbfile.parentFile.mkdirs()
+
+                    withContext(Dispatchers.IO) {
+                        dbfile.createNewFile()
+                    }
                 }
 
-                Database.connect("jdbc:sqlite:file:${dbFile.absolutePathString()}", "org.sqlite.JDBC")
+                Database.connect("jdbc:sqlite:file:${dbfile.absolutePath}", "org.sqlite.JDBC")
                 logger.info(MessageBuilder().withPrefix().success("Successfully connected to database with sqlite!").build())
             }
         }
@@ -273,11 +277,11 @@ object DatabaseProvider {
         newSuspendedTransaction {
             Accounts.deleteAll()
 
-            AuthController.accounts.forEach { _ ->
+            AuthController.accounts.forEach { account ->
                 Accounts.insert {
-                    it[username] = username
-                    it[password] = password
-                    it[blocked] = blocked
+                    it[username] = account.username
+                    it[password] = account.password
+                    it[blocked] = account.blocked
                 }
             }
         }

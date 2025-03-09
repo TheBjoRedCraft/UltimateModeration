@@ -14,4 +14,4 @@ mysql:
   password: root  # Database password / Datenbank-Passwort
 
 discord:
-  staff-chat-url: "https://discord.com/api/webhooks/1234567890/abcdefg" # URL for the staff chat webhook, leave empty to disable / URL für den Webhook des Team-Chats, leer lassen um zu deaktivieren
+  staff-chat-url: "" # URL for the staff chat webhook, leave empty to disable / URL für den Webhook des Team-Chats, leer lassen um zu deaktivieren
