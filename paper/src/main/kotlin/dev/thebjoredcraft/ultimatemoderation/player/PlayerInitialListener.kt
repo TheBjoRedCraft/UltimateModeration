@@ -30,7 +30,7 @@ class PlayerInitialListener(): Listener {
                 lastJoin = System.currentTimeMillis()
             }
 
-            player.inventory = umPlayer.inventory
+            player.inventory.contents = umPlayer.inventory.contents
         }
     }
 }
