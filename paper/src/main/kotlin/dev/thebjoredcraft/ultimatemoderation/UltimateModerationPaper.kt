@@ -4,6 +4,7 @@ import com.github.shynixn.mccoroutine.bukkit.SuspendingJavaPlugin
 import dev.thebjoredcraft.ultimatemoderation.auth.AuthListener
 import dev.thebjoredcraft.ultimatemoderation.auth.command.AuthCommand
 import dev.thebjoredcraft.ultimatemoderation.database.DatabaseProvider
+import dev.thebjoredcraft.ultimatemoderation.discord.DiscordWebsocketService
 import dev.thebjoredcraft.ultimatemoderation.freeze.FreezeCommand
 import dev.thebjoredcraft.ultimatemoderation.listener.DamageListener
 import dev.thebjoredcraft.ultimatemoderation.listener.MoveListener
@@ -47,6 +48,13 @@ class UltimateModerationPaper(): SuspendingJavaPlugin() {
 
     override suspend fun onDisableAsync() {
         DatabaseProvider.saveAccounts()
+    }
+
+    suspend fun reload() {
+        DatabaseProvider.saveAccounts()
+        DatabaseProvider.loadAccounts()
+
+        DiscordWebsocketService.reload()
     }
 
     companion object {
