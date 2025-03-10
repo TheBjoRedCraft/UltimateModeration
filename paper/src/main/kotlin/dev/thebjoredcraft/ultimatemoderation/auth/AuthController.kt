@@ -1,6 +1,8 @@
 package dev.thebjoredcraft.ultimatemoderation.auth
 
-import it.unimi.dsi.fastutil.objects.Object2ObjectMap
+import dev.thebjoredcraft.ultimatemoderation.UltimateModerationPaper
+import dev.thebjoredcraft.ultimatemoderation.util.MessageBuilder
+
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap
 import it.unimi.dsi.fastutil.objects.ObjectArraySet
 import org.bukkit.entity.Player
@@ -9,23 +11,26 @@ object AuthController {
     private val players = Object2ObjectOpenHashMap<Player, AuthAccount>()
     val accounts = ObjectArraySet<AuthAccount>()
 
-    fun authenticate(player: Player, username: String, password: String): Boolean {
+    fun authenticate(player: Player, username: String, password: String) {
         if(!accounts.any { it.username == username }) {
-            return false
+            UltimateModerationPaper.send(MessageBuilder().error("Ein Account mit diesem Name existiert nicht."), player)
+            return
         }
 
         val account = accounts.first { it.username == username }
 
         if(account.password != password) {
-            return false
+            UltimateModerationPaper.send(MessageBuilder().error("Das Passwort ist falsch."), player)
+            return
         }
 
         if(account.blocked) {
-            return false
+            UltimateModerationPaper.send(MessageBuilder().error("Dieser Account ist blockiert. Bitte melde dich beim Server-Team."), player)
+            return
         }
 
         this.login(player, account)
-        return true
+        UltimateModerationPaper.send(MessageBuilder().primary("Du bist nun ").success("eingeloggt."), player)
     }
 
     private fun login(player: Player, account: AuthAccount) {
