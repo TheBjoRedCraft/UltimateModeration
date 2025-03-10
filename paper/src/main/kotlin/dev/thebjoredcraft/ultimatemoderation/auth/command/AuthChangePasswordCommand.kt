@@ -11,7 +11,7 @@ class AuthChangePasswordCommand(commandName: String): CommandAPICommand(commandN
     init {
         withPermission("ultimatemoderation.command.auth.block")
         withArguments(StringArgument("username"))
-        withArguments(StringArgument("newUsername"))
+        withArguments(StringArgument("newPassword"))
         executesPlayer(PlayerCommandExecutor { player, args ->
             val username: String = args.getUnchecked("username") ?: return@PlayerCommandExecutor
             val newPassword: String = args.getUnchecked("newPassword") ?: return@PlayerCommandExecutor
