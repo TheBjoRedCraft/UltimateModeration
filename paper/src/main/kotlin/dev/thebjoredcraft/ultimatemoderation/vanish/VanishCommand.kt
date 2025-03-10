@@ -23,6 +23,20 @@ class VanishCommand(commandName: String): CommandAPICommand(commandName) {
             }
 
             VanishController.toggle(target)
+
+            if(VanishController.isVanished(target)) {
+                if(player == target) {
+                    UltimateModerationPaper.send(MessageBuilder().info("Du ").primary("bist nun ").success("im Vanish"), player)
+                } else {
+                    UltimateModerationPaper.send(MessageBuilder().info(target.name).primary("ist nun ").success("im Vanish"), player)
+                }
+            } else {
+                if(player == target) {
+                    UltimateModerationPaper.send(MessageBuilder().info("Du ").primary("bist nun nicht mehr").error("im Vanish"), player)
+                } else {
+                    UltimateModerationPaper.send(MessageBuilder().info(target.name).primary("ist nun nicht mehr ").error("im Vanish"), player)
+                }
+            }
         })
     }
 }
