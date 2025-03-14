@@ -17,3 +17,4 @@ discord:
   staff-chat-url: "" # URL for the staff chat webhook, leave empty to disable / URL für den Webhook des Team-Chats, leer lassen um zu deaktivieren
 
 language: en_us # Language code / Sprachcode
+plugin-prefix: ""
