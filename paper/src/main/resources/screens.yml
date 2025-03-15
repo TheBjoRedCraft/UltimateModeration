@@ -1,0 +1,17 @@
+ban:
+  title: ""
+  header: ""
+  content: ""
+  footer: ""
+
+kick:
+  title: ""
+  header: ""
+  content: ""
+  footer: ""
+
+blocked:
+  title: ""
+  header: ""
+  content: ""
+  footer: ""

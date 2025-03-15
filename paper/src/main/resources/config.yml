@@ -2,6 +2,9 @@
 # Possible values: local (sqlite), database (mysql) / Mögliche Werte: local (sqlite), database (mysql)
 storage-method: local
 
+# Punishment type configuration (world, server, proxy) / Konfiguration des Bestrafungstyps (world, server, proxy)
+punishment-type: server
+
 # MySQL database configuration / MySQL-Datenbankkonfiguration
 mysql:
   host: localhost  # Database host / Datenbank-Host
@@ -15,3 +18,11 @@ discord:
 
 language: en_us # Language code / Sprachcode
 plugin-prefix: "" # Prefix for the plugin / Prefix für das Plugin
+
+punishment-options:
+  type-options:
+    ban-screen: ""
+    kick-screen: ""
+    mute-message: ""
+    warn-message: ""
+
