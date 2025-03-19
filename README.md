@@ -3,8 +3,7 @@
 - Team Login<br>
 - Team Chat<br>
 <br>
-- Freeze<br>
-- Vanish<br>
+
   <br>
 - Discord Integration (Team Chat + Punishments)<br>
 - API (Punishments)<br>
