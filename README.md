@@ -1,3 +1,4 @@
+# WIP
 <h3>Ultimate Moderation</h3>
 - Punishments (Kick, Ban, Mute, Warn) <br>
 - Team Login<br>
